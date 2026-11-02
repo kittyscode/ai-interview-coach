@@ -1,16 +1,23 @@
-# React + Vite
+# AI Interview Coach
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Practise Java interview questions and get an AI score with feedback.
 
-Currently, two official plugins are available:
+## Features
+- Generates interview questions by topic
+- Scores your answer and suggests a better one
+- Saves every attempt so you can track progress
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech
+- Backend: Spring Boot 4, Spring Data JPA, PostgreSQL, Gemini API
+- Frontend: React (Vite)
 
-## React Compiler
+## Run locally
+1. Create a PostgreSQL database named `interview_coach`
+2. Backend: set `GEMINI_API_KEY` and `DB_PASSWORD`, then run
+   `InterviewCoachApplication` from `/backend` (port 8081)
+3. Frontend: in `/frontend` run `npm install` and `npm run dev`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## API
+- `GET /question?topic=Spring Boot`
+- `POST /evaluate`
+- `GET /history`
