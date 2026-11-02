@@ -20,4 +20,9 @@ Practise Java interview questions and get an AI score with feedback.
 ## API
 - `GET /question?topic=Spring Boot`
 - `POST /evaluate`
+<<<<<<< HEAD
 - `GET /history`
+=======
+- `GET /history`
+  
+>>>>>>> c936f34971740322dbb897cb6904e9af6d3cceba
