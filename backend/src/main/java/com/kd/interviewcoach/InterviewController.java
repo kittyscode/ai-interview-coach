@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.*;
 import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:5174")
+import java.util.stream.Collectors;
+
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class InterviewController {
 
@@ -19,9 +21,20 @@ public class InterviewController {
 
     @GetMapping("/question")
     public String question(@RequestParam String topic) {
-        return gemini.ask(
-                "Ask ONE fresher-level Java interview question about "
-                        + topic + ". Reply with only the question.", false);
+        String recent = repo.findAllByOrderByCreatedAtDesc().stream()
+                .limit(10)
+                .map(Attempt::getQuestion)
+                .collect(Collectors.joining("\n- ", "- ", ""));
+
+        String prompt = """
+            Ask ONE fresher-level Java interview question about %s.
+            Pick a random sub-topic within it. Do NOT repeat or closely
+            resemble any of these earlier questions:
+            %s
+            Reply with only the question.
+            """.formatted(topic, recent);
+
+        return gemini.ask(prompt, false, 1.0);
     }
 
     @PostMapping(value = "/evaluate",

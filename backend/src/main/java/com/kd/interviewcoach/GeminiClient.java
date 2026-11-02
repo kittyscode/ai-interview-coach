@@ -18,16 +18,21 @@ public class GeminiClient {
 
     private final RestClient client = RestClient.create();
     private final ObjectMapper mapper = new ObjectMapper();
-
     public String ask(String prompt, boolean json) {
+        return ask(prompt, json, 0.7);
+    }
+
+    public String ask(String prompt, boolean json, double temperature) {
         Map<String, Object> body = new HashMap<>();
         body.put("contents",
                 List.of(Map.of("parts", List.of(Map.of("text", prompt)))));
-        if (json) {
-            body.put("generationConfig",
-                    Map.of("responseMimeType", "application/json"));
-        }
 
+        Map<String, Object> config = new HashMap<>();
+        config.put("temperature", temperature);
+        if (json) {
+            config.put("responseMimeType", "application/json");
+        }
+        body.put("generationConfig", config);
         String raw = client.post()
                 .uri("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent")
                 .header("x-goog-api-key", apiKey)
