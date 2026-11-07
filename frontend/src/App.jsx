@@ -11,7 +11,7 @@ export default function App() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [difficulty, setDifficulty] = useState("medium");
   const loadHistory = async () => {
     try {
       const res = await fetch(`${API}/history`);
@@ -32,7 +32,7 @@ export default function App() {
     setAnswer("");
     try {
       const res = await fetch(
-        `${API}/question?topic=${encodeURIComponent(topic)}`,
+        `${API}/question?topic=${encodeURIComponent(topic)}&difficulty=${difficulty}`,
       );
       setQuestion(await res.text());
     } catch {
@@ -69,6 +69,13 @@ export default function App() {
           onChange={(e) => setTopic(e.target.value)}
           placeholder="Topic, e.g. Spring Boot"
         />
+        <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+          
+        </select>
+
         <button onClick={getQuestion} disabled={loading}>
           Get Question
         </button>
