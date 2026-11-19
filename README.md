@@ -1,4 +1,5 @@
 # AI Interview Coach
+![CI](https://github.com/kittyscode/ai-interview-coach/actions/workflows/ci.yml/badge.svg)
 
 Practise Java interview questions and get an AI score with feedback.
 
